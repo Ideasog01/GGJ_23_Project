@@ -3,8 +3,6 @@
 
 #include "BeaverGame/Characters/PlayerCharacter.h"
 
-
-
 APlayerCharacter::APlayerCharacter()
 {
 	PlayerMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PlayerMesh"));

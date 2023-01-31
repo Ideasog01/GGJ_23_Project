@@ -2,6 +2,12 @@
 
 
 #include "SpawObject.h"
+#include "Interaction/Resource.h"
+
+
+
+class Resource;
+
 
 // Sets default values
 ASpawObject::ASpawObject()
@@ -34,7 +40,7 @@ void ASpawObject::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 bool ASpawObject::SpawnActor()
 {
-	bool SpawnedActor = false;
+	AActor* SpawnedActor = nullptr;
 	if (ActorClassToSpawn)
 	{
 		FBoxSphereBounds BoxBounds = SpawnBox->CalcBounds(GetActorTransform());
@@ -46,9 +52,12 @@ bool ASpawObject::SpawnActor()
 
 		SpawnLocation.Z += BoxBounds.BoxExtent.Z * FMath::FRandRange(-1.0f, 1.0f);
 		
-		SpawnedActor = GetWorld()->SpawnActor(ActorClassToSpawn, &SpawnLocation) != nullptr;
+		SpawnedActor = GetWorld()->SpawnActor(ActorClassToSpawn, &SpawnLocation);
 	}
-	return SpawnedActor;
+
+	AResource* Resource = Cast<AResource>(ActorClassToSpawn);
+	
+	return SpawnedActor != nullptr;
 }
 
 void ASpawObject::ScheduleSpawn()
@@ -69,6 +78,7 @@ void ASpawObject::EnableActorSpawnning(bool Enable)
 		GetWorldTimerManager().ClearTimer(SpawnTimer);
 	}
 }
+
 
 void ASpawObject::SpawnScheduled()
 {

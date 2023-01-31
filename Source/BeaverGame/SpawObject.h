@@ -7,7 +7,51 @@
 
 #include "Components/BoxComponent.h"
 
+
+#include "Materials/MaterialInterface.h"
+#include "Engine/StaticMesh.h"
+
 #include "SpawObject.generated.h"
+
+
+
+USTRUCT(BlueprintType) 
+struct FResourceProperties
+{
+	GENERATED_USTRUCT_BODY()
+
+public:
+
+	FResourceProperties() {}
+	
+private:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resource", meta = (AllowPrivateAccess = true))
+		int resourceindex;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resource", meta = (AllowPrivateAccess = true))
+		UMaterialInterface* material;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resource", meta = (AllowPrivateAccess = true))
+		UStaticMesh* mesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resource", meta = (AllowPrivateAccess = true))
+		FVector scale;
+
+
+
+public:
+	int GetIndex() { return resourceindex; }
+
+	UMaterialInterface* GetMaterial() { return material; }
+
+	UStaticMesh* GetMesh() { return mesh; }
+
+	FVector GetScale() { return scale; }
+
+};
+
+
 
 UCLASS()
 class BEAVERGAME_API ASpawObject : public AActor
@@ -28,37 +72,39 @@ protected:
 
 public:
 
-
 	UFUNCTION(BlueprintCallable)
-		bool SpawnActor();
+	bool SpawnActor();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		TSubclassOf<AActor> ActorClassToSpawn;
+	TSubclassOf<AActor> ActorClassToSpawn;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float AvgSpawnTime = 1.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float AvgSpawnTime = 1.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float RandomSpawnTimeOffset = 0.5f;
+	float RandomSpawnTimeOffset = 0.5f;
 
 
 	UFUNCTION(BlueprintCallable)
 	void EnableActorSpawnning(bool Enable);
+	
 
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<FResourceProperties> resourceArray;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadwrite)
+	UBoxComponent* SpawnBox;
 private:
 
 	UPROPERTY(EditAnywhere)
-		bool ShouldSpawn = true;
+	bool ShouldSpawn = true;
 
 	UFUNCTION()
 	void SpawnScheduled();
 
 	void ScheduleSpawn();
-
-	UPROPERTY(EditDefaultsOnly)
-		
-	UBoxComponent* SpawnBox;
+	
+	
 
 	FTimerHandle SpawnTimer;
 };

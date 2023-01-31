@@ -43,7 +43,7 @@ void ABaseCharacter::Tick(float DeltaTime)
 
 int ABaseCharacter::GetHealth()
 {
-	return health;
+	return Health;
 }
 
 

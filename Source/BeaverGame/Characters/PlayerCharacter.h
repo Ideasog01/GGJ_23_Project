@@ -74,6 +74,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerCharacter")
 	float Thirst = 100.0f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerCharacter")
+	int Stamina;
 
 	UFUNCTION(BlueprintCallable)
 	void IncreaseFood(float amount);

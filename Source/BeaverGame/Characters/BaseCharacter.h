@@ -17,17 +17,14 @@ public:
 	
 
 	UFUNCTION(BlueprintCallable)
-		void TakeDamage(float amount);
+	void TakeDamage(float amount);
 	
 	UFUNCTION(BlueprintCallable)
-		void IncreaseHealth(float amount);
-	
-	
+	void IncreaseHealth(float amount);
 
 	
 private:
-	float MaxHealth = 100.0f;
-	
+
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = true))
 	float Health = 100.0f;
 
@@ -39,24 +36,10 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	UPROPERTY(EditAnywhere)
-	int health;
 	
 	UPROPERTY(EditAnywhere)
-	int maxHealth;
+	int MaxHealth;
 
-	UPROPERTY(EditAnywhere)
-	int hunger;
-
-	UPROPERTY(EditAnywhere)
-	int thirst;
-	
-	UPROPERTY(EditAnywhere)
-	int stamina;
-
-	
-	
 	int GetHealth();
 	
 };

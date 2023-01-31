@@ -23,7 +23,23 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	UPROPERTY(EditAnywhere)
+	int health;
+	
+	UPROPERTY(EditAnywhere)
+	int maxHealth;
 
+	UPROPERTY(EditAnywhere)
+	int hunger;
+
+	UPROPERTY(EditAnywhere)
+	int thirst;
+	
+	UPROPERTY(EditAnywhere)
+	int stamina;
+
+	
+	
+	int GetHealth();
+	
 };

@@ -32,10 +32,10 @@ private:
 
 	
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = true))
 	float MoveSpeed = 1.0f;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = true))
 	float RotationSpeed = 1.0f;
 
 	UPROPERTY(EditDefaultsOnly)
@@ -55,9 +55,6 @@ public:
 	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
-	UFUNCTION(BlueprintCallable)
-	void Sprint();
 
 	UFUNCTION(BlueprintCallable)
 	void PushBackAttack();

@@ -12,18 +12,24 @@ ABaseCharacter::ABaseCharacter()
 
 void ABaseCharacter::TakeDamage(float amount)
 {
-	if (Health - amount < 0)
+	/*if (Health - amount < 0)
+	{
 		Health = 0;
+	}
 	else
+	{
 		Health -= amount;
+	}*/
 }
 
 void ABaseCharacter::IncreaseHealth(float amount)
 {
-	Health += amount;
+	/*Health += amount;
 
 	if (Health > MaxHealth)
+	{
 		Health = MaxHealth;
+	}	*/
 }
 
 
@@ -31,6 +37,8 @@ void ABaseCharacter::IncreaseHealth(float amount)
 void ABaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Health = MaxHealth;
 	
 }
 

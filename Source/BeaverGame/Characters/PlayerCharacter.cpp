@@ -56,14 +56,6 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	
 }
 
-
-void APlayerCharacter::Sprint()
-{
-	// increase speed while tab key is held
-	MoveSpeed *= 4;
-	Stamina -= 1 * GetWorld()->GetDeltaSeconds();
-}
-
 void APlayerCharacter::PushBackAttack()
 {
 
@@ -72,8 +64,8 @@ void APlayerCharacter::PushBackAttack()
 void APlayerCharacter::EatBerry()
 {
 	//Add Health
-	Food -= 5;
-	Stamina += 10;
+	//Food -= 5;
+	//Stamina += 10;
 }
 
 void APlayerCharacter::IncreaseFood(float amount)

@@ -38,7 +38,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 	UPROPERTY(EditAnywhere)
-	int MaxHealth;
+	int MaxHealth = 100.0f;
 
 	int GetHealth();
 	

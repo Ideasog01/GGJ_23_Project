@@ -20,8 +20,16 @@ APlayerCharacter::APlayerCharacter()
 	CameraBoom->CameraLagSpeed = 3.0f;
 	
 	PlayerCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
-	
-	
+
+}
+
+void APlayerCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	SetHealth(MaxHealth);
+
+	BeaverController = Cast<ABeaverPlayerController>(GetWorld()->GetFirstPlayerController());
 }
 
 void APlayerCharacter::MoveFB(float Value)
@@ -40,6 +48,11 @@ void APlayerCharacter::RotateY(float Value)
 	AddControllerPitchInput(Value * RotationSpeed);
 }
 
+void APlayerCharacter::Interact()
+{
+	BeaverController->PlayerInteract();
+}
+
 void APlayerCharacter::RotateX(float Value)
 {
 	AddControllerYawInput(Value * RotationSpeed);
@@ -53,6 +66,8 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerInputComponent->BindAxis(TEXT("MoveLR"), this, &APlayerCharacter::MoveLR);
 	PlayerInputComponent->BindAxis(TEXT("RotateX"), this, &APlayerCharacter::RotateX);
 	PlayerInputComponent->BindAxis(TEXT("RotateY"), this, &APlayerCharacter::RotateY);
+	
+	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &APlayerCharacter::Interact);
 	
 }
 

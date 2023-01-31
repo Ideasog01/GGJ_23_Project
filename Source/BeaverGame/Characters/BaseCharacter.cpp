@@ -32,6 +32,11 @@ void ABaseCharacter::IncreaseHealth(float amount)
 	}	*/
 }
 
+void ABaseCharacter::SetHealth(float amount)
+{
+	Health = amount;
+}
+
 
 // Called when the game starts or when spawned
 void ABaseCharacter::BeginPlay()

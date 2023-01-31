@@ -11,6 +11,10 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
+#include "BeaverGame/Controllers/BeaverPlayerController.h"
+
+#include "Kismet/GameplayStatics.h"
+
 #include "PlayerCharacter.generated.h"
 
 /**
@@ -22,6 +26,10 @@ class BEAVERGAME_API APlayerCharacter : public ABaseCharacter
 	GENERATED_BODY()
 
 	APlayerCharacter();
+
+protected:
+
+	void BeginPlay();
 	
 private:
 	
@@ -30,7 +38,7 @@ private:
 	void RotateX(float Value);
 	void RotateY(float Value);
 
-	
+	void Interact();
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = true))
 	float MoveSpeed = 1.0f;
@@ -46,12 +54,10 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	USpringArmComponent* CameraBoom;
-	
 
+	ABeaverPlayerController* BeaverController;
 		
 public:
-
-	
 	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

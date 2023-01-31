@@ -22,6 +22,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void IncreaseHealth(float amount);
 
+	UFUNCTION(BlueprintCallable)
+	void SetHealth(float amount);
+
 	
 private:
 

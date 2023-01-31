@@ -6,11 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "BeaverPlayerController.generated.h"
 
-class AResource;
+class ABuildObject;
 
-/**
- * 
- */
 UCLASS()
 class BEAVERGAME_API ABeaverPlayerController : public APlayerController
 {
@@ -18,18 +15,38 @@ class BEAVERGAME_API ABeaverPlayerController : public APlayerController
 
 public:
 
+	void PlayerInteract();
+
 	void AddResource(int resourceIndex, int amount);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int rootsCount;
+	bool HasResources(int roots, int logs, int stone);
+
+	void RemoveResources(int roots, int logs, int stone);
+
+	void DisplayResources(bool active);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int logsCount;
+	int rootsCount = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int stoneCount;
+	int logsCount = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int berriesCount;
+	int stoneCount = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int berriesCount = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	ABuildObject* CurrentBuildObject = nullptr;
+
+protected:
+
+	void BeginPlay();
+
+	//UPROPERTY(EditAnywhere, Category = "UI")
+	//TSubclassOf<class UUserWidget> ResourceDisplayTemplate;
+	
+
 	
 };

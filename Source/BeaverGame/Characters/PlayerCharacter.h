@@ -56,7 +56,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
-
 	UFUNCTION(BlueprintCallable)
 	void Sprint();
 
@@ -71,4 +70,18 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerCharacter")
 	float Food = 100.0f;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerCharacter")
+	float Thirst = 100.0f;
+
+
+	UFUNCTION(BlueprintCallable)
+	void IncreaseFood(float amount);
+	
+	UFUNCTION(BlueprintCallable)
+	void IncreaseThirst(float amount);
+	
+private:
+	float MaxFood = 100.0f;
+	float MaxThirst = 100.0f;
 };

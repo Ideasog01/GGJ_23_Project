@@ -7,7 +7,6 @@
 
 APlayerCharacter::APlayerCharacter()
 {
-
 	PlayerMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PlayerMesh"));
 	PlayerMesh->SetupAttachment(GetCapsuleComponent());
 	PlayerCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("PlayerCamera"));
@@ -75,4 +74,17 @@ void APlayerCharacter::EatBerry()
 	health += 10;
 	hunger -= 5;
 	stamina += 10;
+
+	Food += amount;
+
+	if(Food > MaxFood)
+		Food = MaxFood;
+}
+
+void APlayerCharacter::IncreaseThirst(float amount)
+{
+	Thirst += amount;
+
+	if (Thirst > MaxThirst)
+		Thirst = MaxThirst;
 }

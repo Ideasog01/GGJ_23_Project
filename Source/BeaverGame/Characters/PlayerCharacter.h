@@ -32,10 +32,10 @@ private:
 
 	
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = true))
 	float MoveSpeed = 1.0f;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = true))
 	float RotationSpeed = 1.0f;
 
 	UPROPERTY(EditDefaultsOnly)
@@ -55,10 +55,6 @@ public:
 	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
-
-	UFUNCTION(BlueprintCallable)
-	void Sprint();
 
 	UFUNCTION(BlueprintCallable)
 	void PushBackAttack();
@@ -71,4 +67,20 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerCharacter")
 	float Food = 100.0f;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerCharacter")
+	float Thirst = 100.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerCharacter")
+	int Stamina;
+
+	UFUNCTION(BlueprintCallable)
+	void IncreaseFood(float amount);
+	
+	UFUNCTION(BlueprintCallable)
+	void IncreaseThirst(float amount);
+	
+private:
+	float MaxFood = 100.0f;
+	float MaxThirst = 100.0f;
 };

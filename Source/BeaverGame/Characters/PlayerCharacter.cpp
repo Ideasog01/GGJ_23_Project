@@ -7,7 +7,6 @@
 
 APlayerCharacter::APlayerCharacter()
 {
-
 	PlayerMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PlayerMesh"));
 	PlayerMesh->SetupAttachment(GetCapsuleComponent());
 	PlayerCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("PlayerCamera"));
@@ -57,14 +56,6 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	
 }
 
-
-void APlayerCharacter::Sprint()
-{
-	// increase speed while tab key is held
-	MoveSpeed *= 4;
-	stamina -= 1 * GetWorld()->GetDeltaSeconds();
-}
-
 void APlayerCharacter::PushBackAttack()
 {
 
@@ -72,7 +63,27 @@ void APlayerCharacter::PushBackAttack()
 
 void APlayerCharacter::EatBerry()
 {
-	health += 10;
-	hunger -= 5;
-	stamina += 10;
+	//Add Health
+	//Food -= 5;
+	//Stamina += 10;
+}
+
+void APlayerCharacter::IncreaseFood(float amount)
+{
+	Food += amount;
+
+	if (Food > MaxFood)
+	{
+		Food = MaxFood;
+	}
+}
+
+void APlayerCharacter::IncreaseThirst(float amount)
+{
+	Thirst += amount;
+
+	if (Thirst > MaxThirst)
+	{
+		Thirst = MaxThirst;
+	}	
 }

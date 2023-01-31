@@ -10,10 +10,35 @@ ABaseCharacter::ABaseCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
+void ABaseCharacter::TakeDamage(float amount)
+{
+	/*if (Health - amount < 0)
+	{
+		Health = 0;
+	}
+	else
+	{
+		Health -= amount;
+	}*/
+}
+
+void ABaseCharacter::IncreaseHealth(float amount)
+{
+	/*Health += amount;
+
+	if (Health > MaxHealth)
+	{
+		Health = MaxHealth;
+	}	*/
+}
+
+
 // Called when the game starts or when spawned
 void ABaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Health = MaxHealth;
 	
 }
 
@@ -26,7 +51,7 @@ void ABaseCharacter::Tick(float DeltaTime)
 
 int ABaseCharacter::GetHealth()
 {
-	return health;
+	return Health;
 }
 
 

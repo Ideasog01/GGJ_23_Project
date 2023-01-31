@@ -27,7 +27,10 @@ private:
 	
 	void MoveFB(float Value);
 	void MoveLR(float Value);
-	void Rotate(float Value);
+	void RotateX(float Value);
+	void RotateY(float Value);
+
+	
 
 	UPROPERTY(EditAnywhere)
 	float MoveSpeed = 1.0f;

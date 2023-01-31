@@ -35,7 +35,13 @@ void APlayerCharacter::MoveLR(float Value)
 	AddMovementInput(GetActorRightVector(), Value * MoveSpeed);
 }
 
-void APlayerCharacter::Rotate(float Value)
+void APlayerCharacter::RotateY(float Value)
+{
+
+	AddControllerPitchInput(Value * RotationSpeed);
+}
+
+void APlayerCharacter::RotateX(float Value)
 {
 	AddControllerYawInput(Value * RotationSpeed);
 }
@@ -48,8 +54,9 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 	PlayerInputComponent->BindAxis(TEXT("MoveFB"), this, &APlayerCharacter::MoveFB);
 	PlayerInputComponent->BindAxis(TEXT("MoveLR"), this, &APlayerCharacter::MoveLR);
-	PlayerInputComponent->BindAxis(TEXT("Rotate"), this, &APlayerCharacter::Rotate);
-	
+	PlayerInputComponent->BindAxis(TEXT("RotateX"), this, &APlayerCharacter::RotateX);
+
+	PlayerInputComponent->BindAxis(TEXT("RotateY"), this, &APlayerCharacter::RotateY);
 	
 }
 

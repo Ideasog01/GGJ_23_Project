@@ -4,34 +4,21 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Components/StaticMeshComponent.h"
 #include "Components/SphereComponent.h"
-#include "Kismet/GameplayStatics.h"
-#include "BeaverGame/Controllers/BeaverPlayerController.h"
-#include "Resource.generated.h"
 
-UENUM(BlueprintType)
-enum ResourceType
-{
-	Roots UMETA(DisplayName = "Roots"),
-	Logs UMETA(DisplayName = "Logs"),
-	Stone UMETA(DisplayName = "Stone"),
-	Berry UMETA(DisplayName = "Berry")
-};
+#include "Kismet/GameplayStatics.h"
+#include "BeaverGame/Characters/PlayerCharacter.h"
+
+#include "DrinkResource.generated.h"
 
 UCLASS()
-class BEAVERGAME_API AResource : public AActor
+class BEAVERGAME_API ADrinkResource : public AActor
 {
 	GENERATED_BODY()
-
-	
 	
 public:	
 	// Sets default values for this actor's properties
-	AResource();
-
-	UPROPERTY(EditAnywhere)
-	UStaticMeshComponent* ResourceMesh;
+	ADrinkResource();
 
 	UPROPERTY(EditAnywhere)
 	USphereComponent* SphereCollision;
@@ -43,16 +30,15 @@ protected:
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+	UFUNCTION()
+	void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 private:
 
-	UPROPERTY(EditAnywhere, Category = Resource)
-	TEnumAsByte<ResourceType> Type;
-
-	UPROPERTY(EditAnywhere, Category = Resource)
-	int resourceAmount;
+	APlayerCharacter* PlayerCharacter;
 
 };

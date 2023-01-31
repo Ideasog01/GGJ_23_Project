@@ -51,6 +51,11 @@ void APlayerCharacter::RotateY(float Value)
 void APlayerCharacter::Interact()
 {
 	BeaverController->PlayerInteract();
+
+	if (bIsNearWater)
+	{
+		DrinkWater();
+	}
 }
 
 void APlayerCharacter::RotateX(float Value)
@@ -81,6 +86,16 @@ void APlayerCharacter::EatBerry()
 	//Add Health
 	//Food -= 5;
 	//Stamina += 10;
+}
+
+void APlayerCharacter::DrinkWater()
+{
+	Thirst+=10;
+
+	if (Thirst > MaxThirst)
+	{
+		Thirst = MaxThirst;
+	}
 }
 
 void APlayerCharacter::IncreaseFood(float amount)

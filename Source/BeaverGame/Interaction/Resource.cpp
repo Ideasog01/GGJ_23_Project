@@ -22,7 +22,6 @@ void AResource::BeginPlay()
 	Super::BeginPlay();
 
 	SphereCollision->OnComponentBeginOverlap.AddDynamic(this, &AResource::OnOverlapBegin);
-	PlayerController = Cast<ABeaverPlayerController>(GetWorld()->GetFirstPlayerController());
 	
 }
 
@@ -40,12 +39,7 @@ void AResource::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor*
 	if(ActorHasTag("Player"))
 	{
 		//Add Resource to Inventory
-		PlayerController->AddResource(*this, resourceAmount);
+		Cast<ABeaverPlayerController>(GetWorld()->GetFirstPlayerController())->AddResource(Type, resourceAmount);
 	}
-}
-
-int AResource::GetResourceType()
-{
-	return Type;
 }
 

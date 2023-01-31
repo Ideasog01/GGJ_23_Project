@@ -47,8 +47,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	int GetResourceType();
-
 private:
 
 	UPROPERTY(EditAnywhere, Category = Resource)
@@ -56,8 +54,5 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Resource)
 	int resourceAmount;
-
-	UPROPERTY(EditDefaultsOnly)
-	ABeaverPlayerController* PlayerController;
 
 };

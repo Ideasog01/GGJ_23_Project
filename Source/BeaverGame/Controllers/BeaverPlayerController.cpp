@@ -3,16 +3,14 @@
 
 #include "BeaverGame/Controllers/BeaverPlayerController.h"
 
-void ABeaverPlayerController::AddResource(AResource& resource, int amount)
+void ABeaverPlayerController::AddResource(int resourceIndex, int amount)
 {
-	int resourceIndex = resource.GetResourceType();
-
 	if(resourceIndex > resourceArray.Num() - 1)
 	{
 		//IncrementThirst
 	}
 	else
 	{
-		resourceArray[resource.GetResourceType()] += amount;
+		resourceArray[resourceIndex] += amount;
 	}
 }

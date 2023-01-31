@@ -4,8 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
-#include "BeaverGame/Interaction/Resource.h"
 #include "BeaverPlayerController.generated.h"
+
+class AResource;
 
 /**
  * 
@@ -17,7 +18,7 @@ class BEAVERGAME_API ABeaverPlayerController : public APlayerController
 
 public:
 
-	void AddResource(AResource &resource, int amount);
+	void AddResource(int resourceIndex, int amount);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<int> resourceArray;

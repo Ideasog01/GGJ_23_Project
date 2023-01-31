@@ -14,10 +14,27 @@ class BEAVERGAME_API ABaseCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	ABaseCharacter();
+	
+
+	UFUNCTION(BlueprintCallable)
+		void TakeDamage(float amount);
+	
+	UFUNCTION(BlueprintCallable)
+		void IncreaseHealth(float amount);
+	
+	
+
+	
+private:
+	float MaxHealth = 100.0f;
+	
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = true))
+	float Health = 100.0f;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
 
 public:	
 	// Called every frame

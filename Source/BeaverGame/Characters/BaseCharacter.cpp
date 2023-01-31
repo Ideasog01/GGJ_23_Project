@@ -11,6 +11,23 @@ ABaseCharacter::ABaseCharacter()
 
 }
 
+void ABaseCharacter::TakeDamage(float amount)
+{
+	if (Health - amount < 0)
+		Health = 0;
+	else
+		Health -= amount;
+}
+
+void ABaseCharacter::IncreaseHealth(float amount)
+{
+	Health += amount;
+
+	if (Health > MaxHealth)
+		Health = MaxHealth;
+}
+
+
 // Called when the game starts or when spawned
 void ABaseCharacter::BeginPlay()
 {

@@ -20,4 +20,6 @@ void ABeaverPlayerController::AddResource(int resourceIndex, int amount)
 		berriesCount += amount;
 		break;
 	}
+
+	UE_LOG(LogTemp, Warning, TEXT("Roots Count: %d"), rootsCount);
 }

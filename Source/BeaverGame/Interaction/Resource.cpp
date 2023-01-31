@@ -34,9 +34,7 @@ void AResource::Tick(float DeltaTime)
 
 void AResource::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Collision Occurred"));
-
-	if(ActorHasTag("Player"))
+	if(OtherActor->ActorHasTag("Player"))
 	{
 		//Add Resource to Inventory
 
@@ -44,9 +42,12 @@ void AResource::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor*
 		
 		if(PlayerController != nullptr)
 		{
+			UE_LOG(LogTemp, Warning, TEXT("Resource Added!"));
 			PlayerController->AddResource(Type, resourceAmount);
+			SetActorHiddenInGame(true);
+			SetActorEnableCollision(false);
+			SetActorTickEnabled(false);
 		}
-		
 	}
 }
 

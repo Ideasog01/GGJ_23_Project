@@ -39,7 +39,14 @@ void AResource::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor*
 	if(ActorHasTag("Player"))
 	{
 		//Add Resource to Inventory
-		Cast<ABeaverPlayerController>(GetWorld()->GetFirstPlayerController())->AddResource(Type, resourceAmount);
+
+		ABeaverPlayerController* PlayerController = Cast<ABeaverPlayerController>(GetWorld()->GetFirstPlayerController());
+		
+		if(PlayerController != nullptr)
+		{
+			PlayerController->AddResource(Type, resourceAmount);
+		}
+		
 	}
 }
 

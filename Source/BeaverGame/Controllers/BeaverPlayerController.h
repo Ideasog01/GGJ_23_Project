@@ -21,6 +21,15 @@ public:
 	void AddResource(int resourceIndex, int amount);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<int> resourceArray;
+	int rootsCount;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int logsCount;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int stoneCount;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int berriesCount;
 	
 };

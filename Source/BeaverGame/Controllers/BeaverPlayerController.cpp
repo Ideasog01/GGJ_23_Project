@@ -5,12 +5,19 @@
 
 void ABeaverPlayerController::AddResource(int resourceIndex, int amount)
 {
-	if(resourceIndex > resourceArray.Num() - 1)
+	switch (resourceIndex)
 	{
-		//IncrementThirst
-	}
-	else
-	{
-		resourceArray[resourceIndex] += amount;
+	case 0:
+		rootsCount += amount;
+		break;
+	case 1:
+		logsCount += amount;
+		break;
+	case 2:
+		stoneCount += amount;
+		break;
+	case 3:
+		berriesCount += amount;
+		break;
 	}
 }

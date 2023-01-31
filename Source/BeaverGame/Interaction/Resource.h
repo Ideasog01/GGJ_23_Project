@@ -16,7 +16,8 @@ enum ResourceType
 	Roots UMETA(DisplayName = "Roots"),
 	Logs UMETA(DisplayName = "Logs"),
 	Stone UMETA(DisplayName = "Stone"),
-	Water UMETA(DisplayName = "Water")
+	Water UMETA(DisplayName = "Water"),
+	Berry UMETA(DisplayName = "Berry")
 };
 
 UCLASS()

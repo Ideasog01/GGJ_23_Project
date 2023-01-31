@@ -49,6 +49,11 @@ void APlayerCharacter::RotateY(float Value)
 void APlayerCharacter::Interact()
 {
 	BeaverController->PlayerInteract();
+
+	if (bIsNearWater)
+	{
+		DrinkWater();
+	}
 }
 
 void APlayerCharacter::RotateX(float Value)
@@ -66,6 +71,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerInputComponent->BindAxis(TEXT("RotateY"), this, &APlayerCharacter::RotateY);
 	
 	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &APlayerCharacter::Interact);
+	PlayerInputComponent->BindAction("EatBerry", IE_Pressed, this, &APlayerCharacter::EatBerry);
 	
 }
 
@@ -76,9 +82,21 @@ void APlayerCharacter::PushBackAttack()
 
 void APlayerCharacter::EatBerry()
 {
-	//Add Health
-	//Food -= 5;
-	//Stamina += 10;
+	if (BeaverController->berriesCount > 0)
+	{
+		IncreaseFood(30);
+		BeaverController->berriesCount--;
+	}
+}
+
+void APlayerCharacter::DrinkWater()
+{
+	Thirst+=10;
+
+	if (Thirst > MaxThirst)
+	{
+		Thirst = MaxThirst;
+	}
 }
 
 void APlayerCharacter::IncreaseFood(float amount)

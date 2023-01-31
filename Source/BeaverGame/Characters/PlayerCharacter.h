@@ -67,6 +67,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void EatBerry();
+
+	UFUNCTION(BlueprintCallable)
+	void DrinkWater();
+
+	bool bIsNearWater = false;
 	
 	
 public:

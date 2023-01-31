@@ -14,4 +14,11 @@ class BEAVERGAME_API APlayerCharacter : public ABaseCharacter
 {
 	GENERATED_BODY()
 	
+public:
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerCharacter")
+		float Food = 100.0f;
+
+	UFUNCTION(BlueprintCallable)
+	void IncreaseFood(float amount);
 };

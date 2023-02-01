@@ -38,6 +38,8 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resource", meta = (AllowPrivateAccess = true))
 		FVector scale;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resource", meta = (AllowPrivateAccess = true))
+	FVector location;
 
 
 public:
@@ -48,6 +50,8 @@ public:
 	UStaticMesh* GetMesh() { return mesh; }
 
 	FVector GetScale() { return scale; }
+
+	FVector GetLocation() { return location; }
 
 };
 

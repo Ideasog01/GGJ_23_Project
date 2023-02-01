@@ -44,6 +44,8 @@ void AResource::ResetResource(FResourceProperties resourceProperties)
 	ResourceMesh->SetMaterial(0, resourceProperties.GetMaterial());
 
 	ResourceMesh->SetWorldScale3D(resourceProperties.GetScale());
+
+	ResourceMesh->SetWorldLocation(resourceProperties.GetLocation());
 	
 }
 

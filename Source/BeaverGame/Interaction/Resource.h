@@ -8,6 +8,7 @@
 #include "Components/SphereComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "BeaverGame/Controllers/BeaverPlayerController.h"
+#include "Components/SceneComponent.h"
 #include "../SpawObject.h"
 #include "Resource.generated.h"
 
@@ -31,6 +32,9 @@ class BEAVERGAME_API AResource : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AResource();
+
+	UPROPERTY(EditAnywhere)
+	USceneComponent* ResourceScene;
 
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* ResourceMesh;

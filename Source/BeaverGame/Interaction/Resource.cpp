@@ -9,21 +9,23 @@ AResource::AResource()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	ResourceMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Resource Mesh"));
-	ResourceMesh->SetupAttachment(RootComponent);
+	ResourceScene = CreateDefaultSubobject<USceneComponent>(TEXT("Resource Scene Component"));
+	SetRootComponent(ResourceScene);
 
 	SphereCollision = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere Collision"));
+	SphereCollision->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
 	SphereCollision->SetupAttachment(RootComponent);
-	
+
+	ResourceMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Resource Mesh"));
+	ResourceMesh->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
+	ResourceMesh->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
 void AResource::BeginPlay()
 {
 	Super::BeginPlay();
-
 	SphereCollision->OnComponentBeginOverlap.AddDynamic(this, &AResource::OnOverlapBegin);
-	
 }
 
 // Called every frame

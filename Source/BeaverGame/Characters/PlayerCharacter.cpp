@@ -100,6 +100,7 @@ void APlayerCharacter::EatBerry()
 	if (BeaverController->berriesCount > 0)
 	{
 		IncreaseFood(30);
+		IncreaseHealth(30);
 		BeaverController->berriesCount--;
 	}
 }

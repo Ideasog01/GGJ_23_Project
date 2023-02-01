@@ -9,9 +9,12 @@ void ABeaverPlayerController::PlayerInteract()
 	if (CurrentBuildObject != nullptr)
 	{
 		CurrentBuildObject->Build();
+		buildcounter++;
 		CurrentBuildObject = nullptr;
 	}
 }
+
+
 
 void ABeaverPlayerController::AddResource(int resourceIndex, int amount)
 {
@@ -69,6 +72,14 @@ void ABeaverPlayerController::DisplayResources(bool active)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Error: ResourceDisplay in BeaverPlayerController is equal to null. \nPlease assign BeaverPlayerController in the blueprint."));
 	}*/
+}
+
+void ABeaverPlayerController::WinScreen()
+{
+	if(buildcounter > 3)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("You Win!"));
+	}
 }
 
 void ABeaverPlayerController::BeginPlay()

@@ -9,7 +9,6 @@ void ABeaverPlayerController::PlayerInteract()
 	if (CurrentBuildObject != nullptr)
 	{
 		CurrentBuildObject->Build();
-		buildcounter++;
 		CurrentBuildObject = nullptr;
 	}
 }
@@ -39,11 +38,17 @@ void ABeaverPlayerController::AddResource(int resourceIndex, int amount)
 
 bool ABeaverPlayerController::HasResources(int roots, int logs, int stone)
 {
-	bool hasResources = true;
+	bool hasResources = false;
 
-	hasResources &= roots <= rootsCount;
-	hasResources &= logs <= logsCount;
-	hasResources &= stone <= stoneCount;
+	hasResources = roots <= rootsCount && logs <= logsCount && stone <= stoneCount;
+
+	if (hasResources)
+	{
+		rootsCount -= roots;
+		logsCount -= logs;
+		stoneCount -= stone;
+		buildcounter++;
+	}
 
 	return hasResources;
 }
@@ -76,10 +81,7 @@ void ABeaverPlayerController::DisplayResources(bool active)
 
 void ABeaverPlayerController::WinScreen()
 {
-	if(buildcounter > 3)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("You Win!"));
-	}
+
 }
 
 void ABeaverPlayerController::BeginPlay()

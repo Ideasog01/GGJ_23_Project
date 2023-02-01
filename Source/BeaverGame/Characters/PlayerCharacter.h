@@ -15,6 +15,9 @@
 
 #include "Kismet/GameplayStatics.h"
 
+#include "BeaverGame/Characters/WolfCharacter.h"
+#include "Engine/EngineTypes.h"
+
 #include "PlayerCharacter.generated.h"
 
 
@@ -60,7 +63,7 @@ private:
 	USpringArmComponent* CameraBoom;
 
 	ABeaverPlayerController* BeaverController;
-		
+	
 public:
 	
 	// Called to bind functionality to input
@@ -77,7 +80,10 @@ public:
 
 	bool bIsNearWater = false;
 	
+
+	AWolfCharacter* Wolf;
 	
+
 public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerCharacter")
@@ -98,4 +104,6 @@ public:
 private:
 	float MaxFood = 100.0f;
 	float MaxThirst = 100.0f;
+
+	FTimerHandle* pushBackTimer;
 };

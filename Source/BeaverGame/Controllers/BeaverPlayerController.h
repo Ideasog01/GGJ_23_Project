@@ -15,6 +15,9 @@ class BEAVERGAME_API ABeaverPlayerController : public APlayerController
 
 public:
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int buildcounter;
+	
 	void PlayerInteract();
 
 	void AddResource(int resourceIndex, int amount);
@@ -39,6 +42,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	ABuildObject* CurrentBuildObject = nullptr;
+
+	UFUNCTION(BlueprintCallable)
+	void WinScreen();
 
 protected:
 

@@ -6,7 +6,6 @@
 #include "BeaverGame/Characters/BaseCharacter.h"
 
 #include "Camera/CameraComponent.h"
-#include "Engine/StaticMesh.h"
 
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -55,9 +54,6 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	UCameraComponent* PlayerCamera;
-
-	UPROPERTY(EditDefaultsOnly)
-	UStaticMeshComponent* PlayerMesh;
 
 	UPROPERTY(EditDefaultsOnly)
 	USpringArmComponent* CameraBoom;

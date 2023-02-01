@@ -5,8 +5,6 @@
 
 APlayerCharacter::APlayerCharacter()
 {
-	PlayerMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PlayerMesh"));
-	PlayerMesh->SetupAttachment(GetCapsuleComponent());
 	PlayerCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("PlayerCamera"));
 
 	// Camera Boom

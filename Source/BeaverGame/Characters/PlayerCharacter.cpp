@@ -80,16 +80,20 @@ void APlayerCharacter::PushBackAttack()
 	float cooldown = 10.0f;
 	// push back wold from player
 	
+
+	
 	FVector PushBackDirection = GetActorForwardVector() + 30;
 	
-	Wolf->SetActorLocation(Wolf->GetActorLocation() + PushBackDirection);
-	Wolf->TakeDamage(5.0f);
+
+	if (cooldown == 0) {
+		Wolf->SetActorLocation(Wolf->GetActorLocation() + PushBackDirection);
+		Wolf->TakeDamage(5.0f);
+	}
 	
-	
-	float DeltaTime;
+	float DeltaTime = 0.0f;
 	
 	Super::Tick(DeltaTime);
-	cooldown += DeltaTime;
+	cooldown -= DeltaTime;
 	
 }
 

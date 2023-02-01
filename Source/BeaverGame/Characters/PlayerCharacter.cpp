@@ -42,7 +42,6 @@ void APlayerCharacter::MoveLR(float Value)
 
 void APlayerCharacter::RotateY(float Value)
 {
-
 	AddControllerPitchInput(Value * RotationSpeed);
 }
 
@@ -78,6 +77,20 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 void APlayerCharacter::PushBackAttack()
 {
 
+	float cooldown = 10.0f;
+	// push back wold from player
+	
+	FVector PushBackDirection = GetActorForwardVector() + 30;
+	
+	Wolf->SetActorLocation(Wolf->GetActorLocation() + PushBackDirection);
+	Wolf->TakeDamage(5.0f);
+	
+	
+	float DeltaTime;
+	
+	Super::Tick(DeltaTime);
+	cooldown += DeltaTime;
+	
 }
 
 void APlayerCharacter::EatBerry()

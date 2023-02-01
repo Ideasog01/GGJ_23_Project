@@ -2,6 +2,12 @@
 
 
 #include "SpawObject.h"
+#include "Interaction/Resource.h"
+
+
+
+class Resource;
+
 
 // Sets default values
 ASpawObject::ASpawObject()
@@ -34,21 +40,57 @@ void ASpawObject::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 bool ASpawObject::SpawnActor()
 {
-	bool SpawnedActor = false;
+	AActor* SpawnedActor = nullptr;
+	
 	if (ActorClassToSpawn)
 	{
 		FBoxSphereBounds BoxBounds = SpawnBox->CalcBounds(GetActorTransform());
-
-		FVector SpawnLocation = BoxBounds.Origin;
-		SpawnLocation.X += BoxBounds.BoxExtent.X * FMath::FRandRange(-1.0f, 1.0f);
-
-		SpawnLocation.Y += BoxBounds.BoxExtent.Y * FMath::FRandRange(-1.0f, 1.0f);
-
-		SpawnLocation.Z += BoxBounds.BoxExtent.Z * FMath::FRandRange(-1.0f, 1.0f);
+		FHitResult HitResult;
+		FCollisionQueryParams CollisionParams;
+		CollisionParams.AddIgnoredActor(SpawnedActor);
+		CollisionParams.bTraceComplex = true;
 		
-		SpawnedActor = GetWorld()->SpawnActor(ActorClassToSpawn, &SpawnLocation) != nullptr;
+		FVector SpawnLocation = BoxBounds.Origin;
+		
+		SpawnedActor = GetWorld()->SpawnActor(ActorClassToSpawn, &SpawnLocation);
+
+		SpawnedActor->SetActorLocation(SpawnLocation);
+
+
+		
+
+		AResource* Resource = Cast<AResource>(SpawnedActor);
+		Resource->ResetResource(resourceArray[FMath::RandRange(0, resourceArray.Num() - 1)]);
+		UStaticMeshComponent* ObjectMeshComponent = SpawnedActor->FindComponentByClass<UStaticMeshComponent>();
+
+		if (ObjectMeshComponent)
+		{
+			
+			
+			FVector ObjectMeshExtent = ObjectMeshComponent->Bounds.GetBox().GetExtent();
+			float ObjectHalfHeight = ObjectMeshExtent.Z;
+
+			SpawnLocation.X += BoxBounds.BoxExtent.X * FMath::FRandRange(-1.0f, 1.0f);
+
+			SpawnLocation.Y += BoxBounds.BoxExtent.Y * FMath::FRandRange(-1.0f, 1.0f);
+
+			
+			
+
+			if (GetWorld()->LineTraceSingleByChannel(HitResult, SpawnLocation, SpawnLocation - FVector(0, 0, 10000), ECC_Visibility, CollisionParams))
+			{
+				SpawnLocation.Z = HitResult.Location.Z;
+				SpawnLocation.Z += ObjectHalfHeight;
+				SpawnedActor->SetActorLocation(SpawnLocation);
+			}
+		}
+		
+
 	}
-	return SpawnedActor;
+	
+	
+
+	return SpawnedActor != nullptr;
 }
 
 void ASpawObject::ScheduleSpawn()
@@ -70,6 +112,7 @@ void ASpawObject::EnableActorSpawnning(bool Enable)
 	}
 }
 
+
 void ASpawObject::SpawnScheduled()
 {
 
@@ -84,5 +127,4 @@ void ASpawObject::SpawnScheduled()
 	{
 		UE_LOG(LogTemp, Error, TEXT("Failed to spawn actor"));
 	}
-	
 }

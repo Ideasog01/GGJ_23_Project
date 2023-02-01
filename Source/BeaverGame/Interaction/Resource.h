@@ -8,7 +8,11 @@
 #include "Components/SphereComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "BeaverGame/Controllers/BeaverPlayerController.h"
+#include "../SpawObject.h"
 #include "Resource.generated.h"
+
+struct FResourceProperties;
+
 
 UENUM(BlueprintType)
 enum ResourceType
@@ -23,8 +27,6 @@ UCLASS()
 class BEAVERGAME_API AResource : public AActor
 {
 	GENERATED_BODY()
-
-	
 	
 public:	
 	// Sets default values for this actor's properties
@@ -46,6 +48,8 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	void ResetResource(FResourceProperties resourceProperties);
 
 private:
 

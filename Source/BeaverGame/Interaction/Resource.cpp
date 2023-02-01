@@ -14,6 +14,7 @@ AResource::AResource()
 
 	SphereCollision = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere Collision"));
 	SphereCollision->SetupAttachment(RootComponent);
+	
 }
 
 // Called when the game starts or when spawned
@@ -30,6 +31,22 @@ void AResource::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+
+
+void AResource::ResetResource(FResourceProperties resourceProperties)
+{
+	Type = (ResourceType)resourceProperties.GetIndex();
+	
+	ResourceMesh->SetStaticMesh(resourceProperties.GetMesh());
+
+	ResourceMesh->SetMaterial(0, resourceProperties.GetMaterial());
+
+	ResourceMesh->SetWorldScale3D(resourceProperties.GetScale());
+
+	ResourceMesh->SetWorldLocation(resourceProperties.GetLocation());
+	
 }
 
 void AResource::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

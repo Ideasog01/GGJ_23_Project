@@ -15,6 +15,10 @@ void ABaseCharacter::TakeDamage(float amount)
 	if (Health - amount < 0)
 	{
 		Health = 0;
+		// Delete player object
+		bGameover = true;
+		delete this;
+		
 	}
 	else
 	{
@@ -29,7 +33,7 @@ void ABaseCharacter::IncreaseHealth(float amount)
 	if (Health > MaxHealth)
 	{
 		Health = MaxHealth;
-	}	
+	}
 }
 
 void ABaseCharacter::SetHealth(float amount)

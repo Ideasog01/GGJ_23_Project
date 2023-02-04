@@ -1,13 +1,8 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "BeaverGame/Interaction/Resource.h"
 
-// Sets default values
+
 AResource::AResource()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
 
 	ResourceScene = CreateDefaultSubobject<USceneComponent>(TEXT("Resource Scene Component"));
 	SetRootComponent(ResourceScene);
@@ -21,43 +16,19 @@ AResource::AResource()
 	ResourceMesh->SetupAttachment(RootComponent);
 }
 
-// Called when the game starts or when spawned
+
 void AResource::BeginPlay()
 {
 	Super::BeginPlay();
 	SphereCollision->OnComponentBeginOverlap.AddDynamic(this, &AResource::OnOverlapBegin);
-}
-
-// Called every frame
-void AResource::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-
-
-void AResource::ResetResource(FResourceProperties resourceProperties)
-{
-	Type = (ResourceType)resourceProperties.GetIndex();
-	
-	ResourceMesh->SetStaticMesh(resourceProperties.GetMesh());
-
-	ResourceMesh->SetMaterial(0, resourceProperties.GetMaterial());
-
-	ResourceMesh->SetWorldScale3D(resourceProperties.GetScale());
-
-	ResourceMesh->SetWorldLocation(resourceProperties.GetLocation());
-	
+	PlayerController = Cast<ABeaverPlayerController>(GetWorld()->GetFirstPlayerController()); //Gets the player controller for adding resource
 }
 
 void AResource::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if(OtherActor->ActorHasTag("Player"))
+	if(OtherActor->ActorHasTag("Player")) //If the player is near, hide the resource and add the values to the player controller
 	{
 		//Add Resource to Inventory
-
-		ABeaverPlayerController* PlayerController = Cast<ABeaverPlayerController>(GetWorld()->GetFirstPlayerController());
 		
 		if(PlayerController != nullptr)
 		{

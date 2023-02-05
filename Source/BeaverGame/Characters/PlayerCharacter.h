@@ -80,6 +80,7 @@ public:
 	AWolfCharacter* Wolf;
 	
 
+	
 public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerCharacter")

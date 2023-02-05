@@ -13,8 +13,6 @@ void ABeaverPlayerController::PlayerInteract()
 	}
 }
 
-
-
 void ABeaverPlayerController::AddResource(int resourceIndex, int amount)
 {
 	switch (resourceIndex)
@@ -33,7 +31,7 @@ void ABeaverPlayerController::AddResource(int resourceIndex, int amount)
 		break;
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("Roots Count: %d"), rootsCount);
+	UE_LOG(LogTemp, Warning, TEXT("Resource Added = "));
 }
 
 bool ABeaverPlayerController::HasResources(int roots, int logs, int stone)

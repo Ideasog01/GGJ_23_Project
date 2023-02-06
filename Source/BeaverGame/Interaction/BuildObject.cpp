@@ -1,6 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "BeaverGame/Interaction/BuildObject.h"
 
 // Sets default values
@@ -8,6 +5,8 @@ ABuildObject::ABuildObject()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	//Created inherited components, mesh and collider
 
 	ObjectMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Object Mesh"));
 	ObjectMesh->SetupAttachment(RootComponent);
@@ -18,9 +17,9 @@ ABuildObject::ABuildObject()
 
 }
 
-void ABuildObject::Build()
+void ABuildObject::Build() //Activates when the player interacts near the object
 {
-	if(BeaverController->HasResources(requiredRoots, requiredLogs, requiredStone))
+	if(BeaverController->HasResources(requiredRoots, requiredLogs, requiredStone)) //If the player has the resources, display the object and disable the sphere collider
 	{
 		ObjectMesh->SetVisibility(true);
 		SphereCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
@@ -30,14 +29,14 @@ void ABuildObject::Build()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Not enough resources!!"));
 	}
-	
 }
 
 // Called when the game starts or when spawned
 void ABuildObject::BeginPlay()
 {
 	Super::BeginPlay();
-	BeaverController = Cast<ABeaverPlayerController>(GetWorld()->GetFirstPlayerController());
+
+	BeaverController = Cast<ABeaverPlayerController>(GetWorld()->GetFirstPlayerController()); //Reference to player controller for accessing obtained resources
 
 	if (BeaverController == nullptr)
 	{
@@ -50,7 +49,7 @@ void ABuildObject::BeginPlay()
 
 void ABuildObject::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor->ActorHasTag("Player"))
+	if (OtherActor->ActorHasTag("Player")) //If player is near, set current build object to this object
 	{
 		//Assign this build object to current in player controller
 
@@ -62,7 +61,7 @@ void ABuildObject::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAct
 	}
 }
 
-void ABuildObject::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+void ABuildObject::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) //If player is no longer near, remove reference to this object
 {
 	if (OtherActor->ActorHasTag("Player"))
 	{
@@ -77,12 +76,5 @@ void ABuildObject::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* Oth
 			}
 		}
 	}
-}
-
-// Called every frame
-void ABuildObject::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
 

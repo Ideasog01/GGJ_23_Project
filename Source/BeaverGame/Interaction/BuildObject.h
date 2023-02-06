@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -21,7 +19,7 @@ class BEAVERGAME_API ABuildObject : public AActor
 	UStaticMeshComponent* ObjectMesh;
 
 	UPROPERTY(EditDefaultsOnly)
-	USphereComponent* SphereCollision;
+	USphereComponent* SphereCollision; //The collider for detecting the player. Collision = Display object resource requirements.
 	
 public:	
 	// Sets default values for this actor's properties
@@ -31,6 +29,8 @@ public:
 
 private:
 
+	//THe required resources
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resource", meta = (AllowPrivateAccess = true))
 	int requiredRoots = 0;
 
@@ -39,6 +39,8 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resource", meta = (AllowPrivateAccess = true))
 	int requiredStone = 0;
+
+	//The name of the object to display when the player is near
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resource", meta = (AllowPrivateAccess = true))
 	FString buildObjectName;
@@ -52,10 +54,6 @@ protected:
 
 	UFUNCTION()
 	void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 private:
 

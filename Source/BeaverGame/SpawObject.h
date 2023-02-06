@@ -7,54 +7,9 @@
 
 #include "Components/BoxComponent.h"
 
-
-#include "Materials/MaterialInterface.h"
 #include "Engine/StaticMesh.h"
 
 #include "SpawObject.generated.h"
-
-
-
-USTRUCT(BlueprintType) 
-struct FResourceProperties
-{
-	GENERATED_USTRUCT_BODY()
-
-public:
-
-	FResourceProperties() {}
-	
-private:
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resource", meta = (AllowPrivateAccess = true))
-		int resourceindex;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resource", meta = (AllowPrivateAccess = true))
-		UMaterialInterface* material;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resource", meta = (AllowPrivateAccess = true))
-		UStaticMesh* mesh;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resource", meta = (AllowPrivateAccess = true))
-		FVector scale;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resource", meta = (AllowPrivateAccess = true))
-	FVector location;
-
-
-public:
-	int GetIndex() { return resourceindex; }
-
-	UMaterialInterface* GetMaterial() { return material; }
-
-	UStaticMesh* GetMesh() { return mesh; }
-
-	FVector GetScale() { return scale; }
-
-	FVector GetLocation() { return location; }
-
-};
-
 
 
 UCLASS()
@@ -66,11 +21,9 @@ public:
 	// Sets default values for this actor's properties
 	ASpawObject();
 
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
 
 	void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
@@ -79,25 +32,26 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool SpawnActor();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TSubclassOf<AActor> ActorClassToSpawn;
-	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "StaticMesh")
+	UStaticMesh* StaticMeshToSpawn;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float AvgSpawnTime = 1.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float RandomSpawnTimeOffset = 0.5f;
 
-
 	UFUNCTION(BlueprintCallable)
 	void EnableActorSpawnning(bool Enable);
 	
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<FResourceProperties> resourceArray;
-	
 	UPROPERTY(EditAnywhere, BlueprintReadwrite)
 	UBoxComponent* SpawnBox;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InstancedMesh")
+	UInstancedStaticMeshComponent* InstancedMeshComponent;
+
+	
+	
 private:
 
 	UPROPERTY(EditAnywhere)
@@ -108,7 +62,5 @@ private:
 
 	void ScheduleSpawn();
 	
-	
-
 	FTimerHandle SpawnTimer;
 };

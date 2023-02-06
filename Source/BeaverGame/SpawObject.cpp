@@ -1,24 +1,20 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "SpawObject.h"
-#include "Interaction/Resource.h"
-
-
-
-class Resource;
-
 
 // Sets default values
 ASpawObject::ASpawObject()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-
 	SpawnBox = CreateDefaultSubobject<UBoxComponent>(TEXT("SpawnBox"));
-
 	RootComponent = SpawnBox;
+
+	InstancedMeshComponent = CreateDefaultSubobject<UInstancedStaticMeshComponent>(TEXT("InstancedStaticMesh"));
+	InstancedMeshComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	InstancedMeshComponent->SetupAttachment(RootComponent);
 }
+
 
 // Called when the game starts or when spawned
 void ASpawObject::BeginPlay()
@@ -40,57 +36,40 @@ void ASpawObject::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 bool ASpawObject::SpawnActor()
 {
-	AActor* SpawnedActor = nullptr;
-	
-	if (ActorClassToSpawn)
+	if (StaticMeshToSpawn)
 	{
 		FBoxSphereBounds BoxBounds = SpawnBox->CalcBounds(GetActorTransform());
 		FHitResult HitResult;
 		FCollisionQueryParams CollisionParams;
-		CollisionParams.AddIgnoredActor(SpawnedActor);
 		CollisionParams.bTraceComplex = true;
 		
 		FVector SpawnLocation = BoxBounds.Origin;
-		
-		SpawnedActor = GetWorld()->SpawnActor(ActorClassToSpawn, &SpawnLocation);
 
-		SpawnedActor->SetActorLocation(SpawnLocation);
+		SpawnLocation.X += BoxBounds.BoxExtent.X * FMath::FRandRange(-1.0f, 1.0f);
+		SpawnLocation.Y += BoxBounds.BoxExtent.Y * FMath::FRandRange(-1.0f, 1.0f);
 
-
-		
-
-		AResource* Resource = Cast<AResource>(SpawnedActor);
-		Resource->ResetResource(resourceArray[FMath::RandRange(0, resourceArray.Num() - 1)]);
-		UStaticMeshComponent* ObjectMeshComponent = SpawnedActor->FindComponentByClass<UStaticMeshComponent>();
-
-		if (ObjectMeshComponent)
+		if (GetWorld()->LineTraceSingleByChannel(HitResult, SpawnLocation, SpawnLocation - FVector(0, 0, 10000), ECC_Visibility, CollisionParams))
 		{
+			SpawnLocation.Z = HitResult.Location.Z;
 			
+			// spawn at location relative to this actor, but rotated to match the normal of the surface
+			FRotator SpawnRotation = GetActorRotation() + HitResult.ImpactNormal.Rotation();
+
+			//FRotator SpawnRotation = HitResult.ImpactNormal.Rotation();
+			InstancedMeshComponent->SetWorldScale3D(FVector(1, 1, 1));
+			// spawn the instanced mesh
+			InstancedMeshComponent->AddInstance(FTransform(SpawnRotation, SpawnLocation));
 			
-			FVector ObjectMeshExtent = ObjectMeshComponent->Bounds.GetBox().GetExtent();
-			float ObjectHalfHeight = ObjectMeshExtent.Z;
-
-			SpawnLocation.X += BoxBounds.BoxExtent.X * FMath::FRandRange(-1.0f, 1.0f);
-
-			SpawnLocation.Y += BoxBounds.BoxExtent.Y * FMath::FRandRange(-1.0f, 1.0f);
-
+			// make sure the Transform of the instance is in world location
+			InstancedMeshComponent->UpdateInstanceTransform(InstancedMeshComponent->GetInstanceCount() - 1, FTransform(SpawnRotation, SpawnLocation), true, true, true);
 			
+			// 
 			
-
-			if (GetWorld()->LineTraceSingleByChannel(HitResult, SpawnLocation, SpawnLocation - FVector(0, 0, 10000), ECC_Visibility, CollisionParams))
-			{
-				SpawnLocation.Z = HitResult.Location.Z;
-				SpawnLocation.Z += ObjectHalfHeight;
-				SpawnedActor->SetActorLocation(SpawnLocation);
-			}
 		}
-		
-
+		return true;
 	}
-	
-	
 
-	return SpawnedActor != nullptr;
+	return false;
 }
 
 void ASpawObject::ScheduleSpawn()

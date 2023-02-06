@@ -39,7 +39,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int berriesCount = 0;
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	ABuildObject* CurrentBuildObject = nullptr;
 
